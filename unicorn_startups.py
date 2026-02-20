@@ -9,15 +9,13 @@ Original file is located at
 ## Purpose:
 This notebook performs an empirical analysis of unicorn startups using the `ramjasmaurya/unicorn-startups` dataset. The primary goal is to extract insights into the dynamics of high-growth entrepreneurial ventures, providing a data-driven perspective on factors contributing to their success.
 
-### Connection to Entrepreneurship Research Themes (Mærsk Mc-Kinney Møller Endowed Chair of Entrepreneurship):
-
 This analysis directly addresses key research themes central to the Mærsk Mc-Kinney Møller Endowed Chair of Entrepreneurship, offering valuable quantitative evidence for understanding entrepreneurial ecosystems:
 
 1.  **Resource Attraction**: By examining the 'Investors' data, this notebook will identify prominent venture capital firms and investment trends, shedding light on how unicorn startups secure crucial funding. This analysis contributes to understanding the mechanisms of capital acquisition, investor networks, and the signaling effects of early-stage funding in high-growth ventures.
 
-2.  **Growth Strategies**: The analysis of 'Date Joined' and 'Country' data will reveal temporal and geographical patterns in unicorn emergence. We will investigate annual growth trends, identify regions with high unicorn density, and potentially uncover early indicators of market maturity or emerging entrepreneurial hubs. This provides insights into effective scaling strategies and environmental factors fostering rapid growth.
+2.  **Growth Strategies**: The analysis of 'Date Joined' and 'Country' data will reveal temporal and geographical patterns in unicorn emergence. Investigate annual growth trends, identify regions with high unicorn density, and potentially uncover early indicators of market maturity or emerging entrepreneurial hubs. This provides insights into effective scaling strategies and environmental factors fostering rapid growth.
 
-3.  **Industry Trends**: Through a detailed examination of the 'Industry' column, this notebook will pinpoint which sectors are most conducive to fostering unicorn startups. Quantifying industry prevalence and growth to better understand the technological and market shifts driving innovation and capital allocation, informing strategies for new venture creation and industry development.
+3.  **Industry Trends**: Through a detailed examination of the 'Industry' column, pinpoint which sectors are most conducive to fostering unicorn startups. Quantifying industry prevalence and growth to better understand the technological and market shifts driving innovation and capital allocation, informing strategies for new venture creation and industry development.
 """
 
 import kagglehub
@@ -25,6 +23,7 @@ import pandas as pd
 import os
 import re
 import ast
+import matplotlib.pyplot as plt
 
 # Download latest version
 path = kagglehub.dataset_download("ramjasmaurya/unicorn-startups")
@@ -44,7 +43,7 @@ df.head()
 # 3. Clean column names and rename valuation specifically
 df.columns = df.columns.str.lower().str.replace(' ', '_')
 
-# Rename the 'valuation' column to your preferred name
+# Rename the 'valuation' column
 df = df.rename(columns={'valuation_($b)': 'valuation_billions'})
 
 # Clean the data: Remove '$' and 'B', then convert to float
@@ -130,8 +129,6 @@ growth_by_country = (
 
 print("Top 10 Countries by New Unicorns (2023-2026):")
 print(growth_by_country)
-
-import matplotlib.pyplot as plt
 
 # Group by year and count companies, then plot
 df.groupby(df['date_joined'].dt.year)['company'].count().plot(kind='line', title='New Unicorns Per Year')

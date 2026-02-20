@@ -692,6 +692,7 @@ def match_midas_firm(investor_name):
     return None
 
 # Apply the matching
+# Originally used exact matching and only three firms had 1:1 naming so used this approach instead, possible there are errors if similarly named firms present
 exploded_unicorns['matched_midas_firm'] = exploded_unicorns['investors'].apply(match_midas_firm)
 
 # 4. Aggregate Portfolio Data by Matched Firm
