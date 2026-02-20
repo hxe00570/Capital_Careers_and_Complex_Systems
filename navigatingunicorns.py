@@ -18,8 +18,6 @@ By integrating data from global unicorn companies with insights into top venture
 *   **Immigrant Ventures:** Explore geographical origins and investor profiles to infer potential contributions of immigrant founders and their impact on entrepreneurial hubs.
 *   **Gender Differences:** An analysis of the Midas List investors to assess the gender distribution among top-tier venture capitalists, offering insights into diversity within the funding landscape and potential implications for funding patterns.
 *   **Public Policies in Entrepreneurship:** Examine geographical distribution and industry focus, infer how regional policies and economic environments may foster or hinder the creation of high-growth ventures.
-
-Through data-driven visualizations and analytical approaches, this notebook provides a contextual framework for investigating these complex entrepreneurial phenomena, offering a foundation for deeper academic inquiry.
 """
 
 import kagglehub
@@ -36,7 +34,7 @@ csv_file = [f for f in os.listdir(path) if f.endswith('.csv')][0]
 unicorns_df = pd.read_csv(os.path.join(path, csv_file))
 
 # 1. Standardize column HEADERS: Remove spaces, parentheses, and dollar signs
-# turn "Valuation ($B)" into "valuation_b"
+# Turn "Valuation ($B)" into "valuation_b"
 unicorns_df.columns = unicorns_df.columns.str.lower().str.replace(' ', '_').str.replace(r'[\(\)\$]', '', regex=True)
 
 # 2. Rename the specific column for our analysis
