@@ -14,10 +14,10 @@ By integrating data from global unicorn companies with insights into top venture
 
 *   **Attracting Resources:** How do certain industries and regions become magnets for significant investment, and what factors contribute to a startup's ability to secure substantial funding?
 *   **Growth Strategies:** What patterns emerge in the scaling trajectories of unicorns, particularly differentiating between rapid expansion and sustained growth across diverse sectors like AI and Fintech?
-*   **Strategic Alliances:** While not explicitly detailed in direct alliances, the network of investors and their portfolio companies implicitly forms a powerful ecosystem of connections and potential collaborations.
+*   **Strategic Alliances:** While not explicitly detailed in direct alliances, the network of investors and their portfolio companies implicitly form a powerful ecosystem of connections and potential collaborations.
 *   **Immigrant Ventures:** Explore geographical origins and investor profiles to infer potential contributions of immigrant founders and their impact on entrepreneurial hubs.
-*   **Gender Differences:** An analysis of the Midas List investors will assess the gender distribution among top-tier venture capitalists, offering insights into diversity within the funding landscape and potential implications for funding patterns.
-*   **Public Policies in Entrepreneurship:** By examining geographical distribution and industry focus, infer how regional policies and economic environments may foster or hinder the creation of high-growth ventures.
+*   **Gender Differences:** An analysis of the Midas List investors to assess the gender distribution among top-tier venture capitalists, offering insights into diversity within the funding landscape and potential implications for funding patterns.
+*   **Public Policies in Entrepreneurship:** Examine geographical distribution and industry focus, infer how regional policies and economic environments may foster or hinder the creation of high-growth ventures.
 
 Through data-driven visualizations and analytical approaches, this notebook provides a contextual framework for investigating these complex entrepreneurial phenomena, offering a foundation for deeper academic inquiry.
 """
@@ -36,18 +36,18 @@ csv_file = [f for f in os.listdir(path) if f.endswith('.csv')][0]
 unicorns_df = pd.read_csv(os.path.join(path, csv_file))
 
 # 1. Standardize column HEADERS: Remove spaces, parentheses, and dollar signs
-# This typically turns "Valuation ($B)" into "valuation_b"
+# turn "Valuation ($B)" into "valuation_b"
 unicorns_df.columns = unicorns_df.columns.str.lower().str.replace(' ', '_').str.replace(r'[\(\)\$]', '', regex=True)
 
 # 2. Rename the specific column for our analysis
-# We check for 'valuation_b' (the cleaned version of the original header)
+# Check for 'valuation_b' (the cleaned version of the original header)
 if 'valuation_b' in unicorns_df.columns:
     unicorns_df = unicorns_df.rename(columns={'valuation_b': 'valuation_billions'})
 elif 'valuation' in unicorns_df.columns:
     unicorns_df = unicorns_df.rename(columns={'valuation': 'valuation_billions'})
 
 # 3. Clean the DATA values: Remove '$', 'B', and any commas from the strings
-# This specifically fixes the ValueError: could not convert string to float: '$140'
+# Fix the ValueError: could not convert string to float: '$140'
 unicorns_df['valuation_billions'] = (
     unicorns_df['valuation_billions']
     .astype(str)
@@ -601,7 +601,7 @@ plt.show()
 exploded_unicorns = unicorns_df.explode('investors')
 top_firms = exploded_unicorns['investors'].value_counts().head(10)
 
-# Alignment with European Context (Your CBS research interest)
+# Alignment with European Context
 european_hubs = ['Denmark', 'Sweden', 'Norway', 'Germany', 'United Kingdom', 'France', 'Netherlands']
 unicorns_df['is_europe'] = unicorns_df['country'].isin(european_hubs)
 
@@ -672,7 +672,7 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 
 # 1. Prepare Midas Firm "Prestige" Data
-# We find the best (minimum) rank for each firm to represent their prestige
+# Find best (minimum) rank for each firm to represent their prestige
 firm_prestige = midas_df.groupby('firm')['rank'].min().reset_index()
 firm_prestige.columns = ['midas_firm', 'best_rank']
 
@@ -680,7 +680,7 @@ firm_prestige.columns = ['midas_firm', 'best_rank']
 exploded_unicorns = unicorns_df.explode('investors')
 
 # 3. Robust "Fuzzy" Matching Logic
-# This checks if a Midas Firm name is contained within the Unicorn Investor string
+# Check if a Midas Firm name is contained within the Unicorn Investor string
 midas_firms_list = firm_prestige['midas_firm'].unique()
 
 def match_midas_firm(investor_name):
