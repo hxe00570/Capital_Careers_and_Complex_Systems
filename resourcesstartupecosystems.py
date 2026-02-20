@@ -67,7 +67,7 @@ df.info()
 """Rename columns in the DataFrame to more concise and consistent names (e.g., 'Amount Raised (USD)' to 'amount_usd'). This step improves readability and ease of use for subsequent analysis. It then prints the updated column names and displays the first 5 rows with the new names."""
 
 # RENAME COLUMNS FOR SHORTER SYNTAX
-# Mapping long dataset names to concise variables consistent with your research themes
+# Mapping long dataset names
 rename_map = {
     'Startup Name': 'startup_name',
     'Industry': 'industry',
@@ -96,7 +96,6 @@ plt.figure(figsize=(14, 8))
 sns.set_theme(style="white")
 
 # Examining the relationship between company size and funding amount
-# This speaks to your proposal's interest in 'organizational outcomes'
 sns.scatterplot(data=df, x='num_employees', y='amount_usd',
                 hue='funding_stage', alpha=0.6, palette='viridis')
 
@@ -208,7 +207,7 @@ plt.show()
 """Generate a faceted choropleth map using `plotly.express` then aggregate total funding per country per funding stage and generate separate maps for each funding stage, showing the geographical concentration of venture capital. This interactive visualization allows for detailed exploration of funding landscapes."""
 
 # FACETED CHOROPLETH: CAPITAL DISTRIBUTION BY STAGE
-# We aggregate the data to get total funding per country per stage
+# Aggregate the data to get total funding per country per stage
 map_data = df.groupby(['country', 'funding_stage'])['amount_usd'].sum().reset_index()
 
 fig = px.choropleth(
@@ -219,12 +218,11 @@ fig = px.choropleth(
     hover_name="country",
     facet_col="funding_stage", # This creates the separate maps
     facet_col_wrap=2,          # Wraps the maps into a grid
-    color_continuous_scale=px.colors.sequential.Viridis, # Alignment with your purple/teal aesthetic
+    color_continuous_scale=px.colors.sequential.Viridis,
     title="Global Venture Capital Concentration by Funding Stage",
     labels={'amount_usd': 'Total Funding (USD)'}
 )
 
-# Clean up layout for a professional academic artifact
 fig.update_layout(
     height=800,
     margin={"r":0,"t":50,"l":0,"b":0},
